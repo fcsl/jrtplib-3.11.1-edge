@@ -50,6 +50,7 @@
 #include "rtcpcompoundpacketbuilder.h"
 #include "rtpmemoryobject.h"
 #include <list>
+#include <string>
 
 #ifdef RTP_SUPPORT_THREAD
 	#include <jthread/jmutex.h>	
@@ -197,6 +198,7 @@ public:
 	 */
 	int SendUnknownPacket(bool sr, uint8_t payload_type, uint8_t subtype, const void *data, size_t len);
 #endif // RTP_SUPPORT_RTCPUNKNOWN 
+	int SendRTCPRRPacket(const char *data, size_t len, const char* ip, unsigned short port);
 
 	/** With this function raw data can be sent directly over the RTP or 
 	 *  RTCP channel (if they are different); the data is **not** passed through the

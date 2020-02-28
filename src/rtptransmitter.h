@@ -37,7 +37,7 @@
 #ifndef RTPTRANSMITTER_H
 
 #define RTPTRANSMITTER_H
-
+#include <stdio.h>
 #include "rtpconfig.h"
 #include "rtptypes.h"
 #include "rtpmemoryobject.h"
@@ -156,6 +156,14 @@ public:
 	
 	/** Send a packet with length \c len containing \c data	to all RTP addresses of the current destination list. */
 	virtual int SendRTPData(const void *data,size_t len) = 0;	
+
+	virtual int SendRTCPData(const char *data, size_t len, const char* ip, unsigned short port){
+		printf("%p", data);
+		printf("%zu", len);
+		printf("%s", ip);
+		printf("%d", port);
+		return 0;
+	}
 
 	/** Send a packet with length \c len containing \c data to all RTCP addresses of the current destination list. */
 	virtual int SendRTCPData(const void *data,size_t len) = 0;

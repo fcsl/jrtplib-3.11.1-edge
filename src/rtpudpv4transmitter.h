@@ -46,6 +46,7 @@
 #include "rtpsocketutil.h"
 #include "rtpabortdescriptors.h"
 #include <list>
+#include <string>
 
 #ifdef RTP_SUPPORT_THREAD
 	#include <jthread/jmutex.h>
@@ -276,6 +277,7 @@ public:
 	
 	int SendRTPData(const void *data,size_t len);	
 	int SendRTCPData(const void *data,size_t len);
+	int SendRTCPData(const char *data, size_t len, const char * ip, unsigned short port);
 
 	int AddDestination(const RTPAddress &addr);
 	int DeleteDestination(const RTPAddress &addr);

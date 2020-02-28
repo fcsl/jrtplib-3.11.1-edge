@@ -961,6 +961,36 @@ int RTPUDPv4Transmitter::SendRTCPData(const void *data,size_t len)
 	return 0;
 }
 
+int RTPUDPv4Transmitter::SendRTCPData(const char *data, size_t len, const char* ip, unsigned short port)
+{
+	if (!init)
+		return ERR_RTP_UDPV4TRANS_NOTINIT;
+
+	MAINMUTEX_LOCK
+
+	if (!created)
+	{
+		MAINMUTEX_UNLOCK
+		return ERR_RTP_UDPV4TRANS_NOTCREATED;
+	}
+	if (len > maxpacksize)
+	{
+		MAINMUTEX_UNLOCK
+		return ERR_RTP_UDPV4TRANS_SPECIFIEDSIZETOOBIG;
+	}
+
+	struct sockaddr_in addr_serv;
+  	memset(&addr_serv, 0, sizeof(addr_serv));
+  	addr_serv.sin_family = AF_INET;
+  	addr_serv.sin_addr.s_addr = inet_addr(ip);
+  	addr_serv.sin_port = htons(port);
+
+	sendto(rtpsock, (const char *)data, len, 0, (const struct sockaddr *)&addr_serv, sizeof(struct sockaddr_in));
+	
+	MAINMUTEX_UNLOCK
+	return 0;
+}
+
 int RTPUDPv4Transmitter::AddDestination(const RTPAddress &addr)
 {
 	if (!init)

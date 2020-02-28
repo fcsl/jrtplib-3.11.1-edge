@@ -890,6 +890,12 @@ int RTPSession::SendUnknownPacket(bool sr, uint8_t payload_type, uint8_t subtype
 
 #endif // RTP_SUPPORT_RTCPUNKNOWN 
 
+int RTPSession::SendRTCPRRPacket(const char *data, size_t len, const char* ip, unsigned short port )
+{
+	//send packet
+	return rtptrans->SendRTCPData(data, len, ip, port);
+}
+
 int RTPSession::SendRawData(const void *data, size_t len, bool usertpchannel)
 {
 	if (!created)
